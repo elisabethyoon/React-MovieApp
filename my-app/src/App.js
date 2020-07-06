@@ -1,49 +1,41 @@
 import React , { Component }from 'react';
 import './App.css';
-import Movie from './Movie'
+import Movie from './Movie';
+import axios from 'axios';
 
 
 
 class App extends Component {
 
-  state = {
-
-  }
+  state = {}
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        movies: [
-          {
-            title: "Matrix",
-            poster:"https://upload.wikimedia.org/wikipedia/ko/thumb/2/26/%EB%A7%A4%ED%8A%B8%EB%A6%AD%EC%8A%A4_%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg/220px-%EB%A7%A4%ED%8A%B8%EB%A6%AD%EC%8A%A4_%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg",
-          },
-          {
-            title: "Full Metal Jacket",
-            poster:"https://upload.wikimedia.org/wikipedia/en/9/99/Full_Metal_Jacket_poster.jpg",
-          },
-          {
-            title: "Oldboy",
-            poster:"https://upload.wikimedia.org/wikipedia/en/6/67/Oldboykoreanposter.jpg",
-          },
-          {
-            title: "Star Wars",
-            poster:"https://secimage.yes24.com/goods/22343246/L"
-          },
-          {
-            title: "Trainspotting",
-            poster: "https://i.pinimg.com/originals/95/fc/b7/95fcb710bd070a1c99096525ce4e4241.jpg"
-          }
-        ]
-      })
-    }, 3000)
+    this._getMovies();
   }
 
   _renderMovies = () => {
-    const movies = this.state.movies.map( (movie, index) => {
-      return <Movie title={movie.title} poster={movie.poster} key={index} />
+    const movies = this.state.movies.map(movie => {
+      console.log(movie)
+      return <Movie title={movie.title} poster={movie.large_cover_image} key={movie.id} />
     })
     return movies
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi()
+    this.setState({
+      movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch('https://yts.mx/api/v2/list_movies.json/sort_by=rating')
+      .then(response => response.json())
+      .then(json => json.data.movies)
+      .catch(err => console.log(err))
+
+    // return axios.get('https://yts.mx/api/v2/list_movies.json/sort_by=rating')
+    // .then(response => console.log(response))
   }
 
   render() {
