@@ -2,11 +2,14 @@ import React , { Component }from 'react';
 import './App.css';
 import Movie from './Movie';
 import axios from 'axios';
+// 생활코딩 리액트
+import TOC from './components/TOC'
+import Content from './components/Content'
+import Subject from './components/Subject'
 
 
-
+// 노마드코더 영화앱
 class App extends Component {
-
   state = {}
 
   componentDidMount() {
@@ -38,18 +41,43 @@ class App extends Component {
     // .then(response => console.log(response))
   }
 
+  // 생활코딩
+  constructor(props){ // 컴포넌트가 실행될 때 constructor라는 함수가 있으면 젤 먼저 실행되서 초기화를 담당한다.
+    super(props);
+    this.state = {
+      subject: {title:'web', sub: 'world wide web'},
+      contents: [
+        {id:1, title:'HTML', desc: 'HTML is aaaa'},
+        {id:2, title:'CSS', desc: 'CSS is bbbb'},
+        {id:3, title:'JavaScript', desc: 'JavaScript is vvvv'},
+      ]
+    }
+  }
+
   render() {
     return (
+      // 노마드코더 영화앱
+      // <div className="App">
+      //   {this.state.movies ? this._renderMovies() : 'Loading'}
+      //   {/* {this.state.movies.map( (movie, index) => {
+      //     return <Movie title={movie.title} poster={movie.poster} key={index} />
+      //   })} */}
+      // </div>
+
+      // 생활코딩 리액트
       <div className="App">
-        {this.state.movies ? this._renderMovies() : 'Loading'}
-        {/* {this.state.movies.map( (movie, index) => {
-          return <Movie title={movie.title} poster={movie.poster} key={index} />
-        })} */}
+        <Subject
+          title={this.state.subject.title}
+          sub={this.state.subject.sub}>
+        </Subject>
+        <TOC data={this.state.contents}></TOC>
+        <Content title="HTML" desc="HTML is dkdkdk"></Content>
       </div>
     )
   }
 }
 
+// 노마드코더 영화앱 함수형
 // function App() {
 //   return (
 //     <div className="App">
