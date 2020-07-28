@@ -67,6 +67,11 @@ class App extends Component {
       _desc = this.state.contents[0].desc;
     }
 
+    const list1 = (e) => {
+      e.preventDefault();
+      this.setState({mode:'read'})
+    }
+
     return (
       // 노마드코더 영화앱
       // <div className="App">
@@ -78,22 +83,18 @@ class App extends Component {
 
       // 생활코딩 리액트
       <div className="App">
-        {/* <Subject
+        <Subject
           title={this.state.subject.title}
-          sub={this.state.subject.sub}>
-        </Subject> */}
-        <header>
-          <h1><a href="/" onClick={function(e){
-            console.log(e);
-            e.preventDefault();
-            // this.state.mode = 'welcome';
-            this.setState({
-              mode:'welcome'
-            })
-          }.bind(this)}>{this.state.subject.title}</a></h1>
-          {this.state.subject.sub}
-        </header>
-        <TOC data={this.state.contents}></TOC>
+          sub={this.state.subject.sub}
+          onChangePage={function(){
+            this.setState({mode:'welcome'})
+          }.bind(this)}
+        >
+        </Subject>
+        <TOC
+          onChangePage={list1}
+          data={this.state.contents}
+        ></TOC>
         <Content title={_title} desc={_desc}></Content>
       </div>
     )
