@@ -10,7 +10,6 @@ class TOC extends Component {
         <li key={data[i].id}>
           <a
             href={"/content/" + data[i].id}
-            onClick={this.props.onChangePage}
           >{data[i].title}</a>
         </li>);
 			i = i + 1;
